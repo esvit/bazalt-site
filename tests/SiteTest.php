@@ -19,7 +19,7 @@ class SiteTest extends \tests\BaseCase
     public function testGet()
     {
         $_SERVER['SERVER_NAME'] = 'bazalt-cms.com';
-        $this->assertEquals($event->getName(), Site::getDomainName());
+        $this->assertEquals('bazalt-cms.com', Site::getDomainName());
     }
 
     /**
