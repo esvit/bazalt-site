@@ -77,16 +77,16 @@ class Site
     /**
      * Detect current site from domain name and redirect as required
      *
-     * @throws Exception\DomainNotFound
+     * @throws Site\Exception\DomainNotFound
      */
     public static function get()
     {
         $domain = self::getDomainName();
         
         if (!self::$enableMultisiting) {
-            $site = Model\Site::getById(1);
+            $site = Site\Model\Site::getById(1);
             if (!$site) {
-                $site = Model\Site::create();
+                $site = Site\Model\Site::create();
                 $site->id = 1;
                 $site->domain = $domain;
                 $site->is_subdomain = false;
@@ -97,10 +97,10 @@ class Site
                 $site->is_active = true;
             }
         } else {
-            $site = Model\Site::getSiteByDomain($domain);
+            $site = Site\Model\Site::getSiteByDomain($domain);
             if (!$site) {
                 $wildcard = '*' . substr($domain, strpos($domain, '.'));
-                $site = Model\Site::getSiteByDomain($wildcard);
+                $site = Site\Model\Site::getSiteByDomain($wildcard);
                 if ($site) {
                     $site->subdomain = substr($domain, 0, strpos($domain, '.'));
                 }
@@ -111,7 +111,7 @@ class Site
         }
 
         if (!$site) {
-            throw new Exception\DomainNotFound($domain);
+            throw new Site\Exception\DomainNotFound($domain);
         }
         return $site;
     }
