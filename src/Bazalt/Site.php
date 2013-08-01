@@ -74,6 +74,11 @@ class Site
         return $domain;
     }
 
+    public static function getId()
+    {
+        return self::get()->id;
+    }
+
     /**
      * Detect current site from domain name and redirect as required
      *
