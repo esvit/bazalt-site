@@ -9,6 +9,7 @@ namespace Bazalt\Site\Model\Base;
  * @property    string  secret_key
  * @property    int     theme_id
  * @property    int     language_id
+ * @property    string  languages
  * @property    int     is_subdomain
  * @property    int     user_id
  * @property    int     is_active
@@ -35,7 +36,7 @@ abstract class Site extends \Bazalt\ORM\Record
         $this->hasColumn('id', 'PUA:int(10)');
         $this->hasColumn('domain', 'varchar(255)|localhost');
         $this->hasColumn('path', 'varchar(255)|/');
-        $this->hasColumn('title', 'N:varchar(255)');
+        $this->hasColumn('languages', 'N:varchar(255)');
         $this->hasColumn('secret_key', 'N:varchar(255)');
         $this->hasColumn('theme_id', 'NU:int(11)');
         $this->hasColumn('language_id', 'NU:int(11)');
@@ -66,6 +67,7 @@ abstract class Site extends \Bazalt\ORM\Record
 
     public function initPlugins()
     {
+        $this->hasPlugin('Bazalt\Site\ORM\Localizable', ['title']);
         $this->hasPlugin('Bazalt\ORM\Plugin\Timestampable', ['created' => 'created_at', 'updated' => 'updated_at']);
     }
 }

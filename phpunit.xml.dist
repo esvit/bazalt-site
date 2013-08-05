@@ -15,6 +15,14 @@
         <ini name="intl.default_locale" value="en"/>
         <ini name="intl.error_level" value="0"/>
         <ini name="memory_limit" value="-1"/>
+        <ini name="date.timezone" value="Europe/Kiev"/>
+
+        <var name="db_type" value="pdo_mysql"/>
+        <var name="db_host" value="localhost" />
+        <var name="db_username" value="root" />
+        <var name="db_password" value="awdawd" />
+        <var name="db_name" value="bazalt_cms" />
+        <var name="db_port" value="3306"/>
     </php>
 
     <testsuites>

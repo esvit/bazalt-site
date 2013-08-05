@@ -8,6 +8,8 @@ use Bazalt\ORM;
  */
 class Site extends Base\Site
 {
+    private $_languages = null;
+
     public static function create()
     {
         $site = new Site();
@@ -50,5 +52,28 @@ class Site extends Base\Site
     public function addLanguage(Language $language)
     {
         $this->Languages->add($language, array('is_active' => 1));
+    }
+
+    /**
+     * @return Language[]
+     */
+    public function getLanguages()
+    {
+        if (!$this->_languages) {
+            $langs = explode(',', $this->languages);
+            $q = Language::select()->whereIn('id', $langs);
+            $languages = $q->fetchAll();
+            $this->_languages = [];
+
+            // fill array in order of $this->languages
+            foreach ($langs as $l) {
+                foreach ($languages as $lang) {
+                    if ($lang->id == $l) {
+                        $this->_languages[$lang->id] = $lang;
+                    }
+                }
+            }
+        }
+        return $this->_languages;
     }
 }
