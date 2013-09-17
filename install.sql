@@ -45,6 +45,19 @@ CREATE TABLE IF NOT EXISTS `cms_sites` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `cms_sites_locale`;
+CREATE TABLE IF NOT EXISTS `cms_sites_locale` (
+  `id` int(10) unsigned NOT NULL,
+  `lang_id` varchar(2) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `completed` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`,`lang_id`),
+  KEY `FK_cms_sites_locale_cms_languages` (`lang_id`),
+  CONSTRAINT `FK_cms_sites_locale_cms_languages` FOREIGN KEY (`lang_id`) REFERENCES `cms_languages` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `FK_cms_sites_locale_cms_sites` FOREIGN KEY (`id`) REFERENCES `cms_sites` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `cms_languages_ref_sites`;
 CREATE TABLE IF NOT EXISTS `cms_languages_ref_sites` (
   `language_id` varchar(2) COLLATE utf8_unicode_ci NOT NULL,
