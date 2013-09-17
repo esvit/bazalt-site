@@ -88,7 +88,7 @@ class Site
     {
         $domain = self::getDomainName();
         
-        if (!self::$enableMultisiting) {
+        if (!self::$enableMultisiting || TESTING_STAGE) {
             $site = Site\Model\Site::getById(1);
             if (!$site) {
                 $site = Site\Model\Site::create();

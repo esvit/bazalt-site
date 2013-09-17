@@ -16,6 +16,7 @@
         "php": ">=5.4.0",
         "analog/analog": "dev-master",
         "bazalt/orm": "dev-master",
+        "bazalt/data": "dev-master",
         "symfony/event-dispatcher": "*"
     },
     "require-dev": {
