@@ -5,8 +5,7 @@ php:
   - 5.5
 
 env:
-  - APPLICATION_ENV="testing"
-  - DB_USERNAME="root"
+  - APPLICATION_ENV="testing" DB_USERNAME="root"
 
 before_install:
   - mysql -u$DB_USERNAME -e 'create database bazalt_cms;'
