@@ -37,7 +37,6 @@ CREATE TABLE IF NOT EXISTS `cms_sites` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `domain` (`domain`),
   KEY `FK_cms_sites_cms_sites` (`site_id`),
-  KEY `FK_cms_sites_cms_users` (`user_id`),
   KEY `FK_cms_sites_cms_languages` (`language_id`),
   KEY `FK_cms_sites_cms_themes` (`theme_id`),
   CONSTRAINT `FK_cms_sites_cms_languages` FOREIGN KEY (`language_id`) REFERENCES `cms_languages` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
