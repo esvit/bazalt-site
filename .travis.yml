@@ -7,6 +7,11 @@ php:
 env:
   - APPLICATION_ENV="testing"
 
+before_install:
+  - mysql -u$DB_USERNAME -e 'create database bazalt_cms;'
+  - mysql -u$DB_USERNAME bazalt_cms < install.sql
+  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('awdawd') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
+
 before_script:
   - composer self-update
   - composer install --dev --no-interaction
