@@ -20,6 +20,9 @@ class SiteTest extends \tests\BaseCase
 
     public function testGetDomain()
     {
+        $_SERVER['SERVER_NAME'] = 'xn--80aaysq4a1e.com';
+        $this->assertEquals('http://анархия.com', Site::getDomain());
+
         $_SERVER['SERVER_NAME'] = 'bazalt-cms.com';
         $this->assertEquals('http://bazalt-cms.com', Site::getDomain());
 
