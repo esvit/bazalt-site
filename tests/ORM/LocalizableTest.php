@@ -16,6 +16,7 @@ class LocalizableTest extends \tests\BaseCase
         $this->site->save();
 
         Localizable::currentSite($this->site);
+        Localizable::returnAllLanguages(false);
 
         $this->site->addLanguage(Language::getByAlias('en'));
         $this->site->addLanguage(Language::getByAlias('ru'));
@@ -106,5 +107,14 @@ class LocalizableTest extends \tests\BaseCase
             'en' => 'English title',
             'uk' => 'Українська назва'
         ], $site->title);
+
+        Localizable::returnAllLanguages(true);
+
+        $site = \Bazalt\Site\Model\Site::getById(999);
+        $this->assertEquals($site->title, [
+            'en' => 'English title',
+            'ru' => 'Русский заголовок',
+            'uk' => 'Українська назва'
+        ]);
     }
 }

@@ -130,6 +130,8 @@ class Localizable extends ORM\Plugin\AbstractPlugin
                 }
                 $record->{$field} = $fieldData;
             }
+        } else {
+            $record->{$field} = [];
         }
     }
 
