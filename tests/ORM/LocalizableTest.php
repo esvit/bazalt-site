@@ -15,8 +15,8 @@ class LocalizableTest extends \tests\BaseCase
         $this->site->id = 999;
         $this->site->save();
 
-        Localizable::currentSite($this->site);
-        Localizable::returnAllLanguages(false);
+        Localizable::setCurrentSite($this->site);
+        Localizable::setReturnAllLanguages(false);
 
         $this->site->addLanguage(Language::getByAlias('en'));
         $this->site->addLanguage(Language::getByAlias('ru'));
@@ -34,10 +34,10 @@ class LocalizableTest extends \tests\BaseCase
     {
         $this->site->delete();
 
-        Localizable::currentSite(null);
+        Localizable::setCurrentSite(null);
     }
 
-    public function testRequired()
+    public function testTranslates()
     {
         $q = new \Bazalt\ORM\Query('SELECT title FROM cms_sites_locale WHERE id = :siteId AND lang_id = :languageId',
                                     ['siteId' => $this->site->id, 'languageId' => 'ru']);
@@ -108,7 +108,7 @@ class LocalizableTest extends \tests\BaseCase
             'uk' => 'Українська назва'
         ], $site->title);
 
-        Localizable::returnAllLanguages(true);
+        Localizable::setReturnAllLanguages(true);
 
         $site = \Bazalt\Site\Model\Site::getById(999);
         $this->assertEquals($site->title, [

@@ -51,6 +51,11 @@ class Site extends Base\Site
         return self::getSiteMirrors($this);
     }
 
+    /**
+     * Добавляет язык на сайт
+     *
+     * @param Language $language
+     */
     public function addLanguage(Language $language)
     {
         $this->Languages->add($language, ['is_active' => 1]);
@@ -65,6 +70,11 @@ class Site extends Base\Site
         }
     }
 
+    /**
+     * Удаляет язык с сайта
+     *
+     * @param Language $language
+     */
     public function removeLanguage(Language $language)
     {
         $this->Languages->remove($language);
@@ -79,6 +89,8 @@ class Site extends Base\Site
     }
 
     /**
+     * Возвращает все языки, которые доступны на сайте
+     *
      * @return Language[]
      */
     public function getLanguages()
@@ -101,6 +113,12 @@ class Site extends Base\Site
         return $this->_languages;
     }
 
+    /**
+     * Проверяет наличие языка на сайте
+     *
+     * @param $alias
+     * @return bool
+     */
     public function hasLanguage($alias)
     {
         return in_array($alias, explode(',', $this->languages));

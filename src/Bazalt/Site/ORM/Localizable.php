@@ -64,7 +64,7 @@ class Localizable extends ORM\Plugin\AbstractPlugin
      *
      * @param bool $value
      */
-    public static function returnAllLanguages($value)
+    public static function setReturnAllLanguages($value)
     {
         self::$returnAllLanguages = $value;
     }
@@ -75,9 +75,14 @@ class Localizable extends ORM\Plugin\AbstractPlugin
      *
      * @param \Bazalt\Site\Model\Site|null $value
      */
-    public static function currentSite($value)
+    public static function setCurrentSite($site)
     {
-        self::$currentSite = $value;
+        self::$currentSite = $site;
+    }
+
+    public static function getCurrentSite()
+    {
+        return self::$currentSite;
     }
 
     /**
@@ -130,8 +135,6 @@ class Localizable extends ORM\Plugin\AbstractPlugin
                 }
                 $record->{$field} = $fieldData;
             }
-        } else {
-            $record->{$field} = [];
         }
     }
 

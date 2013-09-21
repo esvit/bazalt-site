@@ -2,6 +2,8 @@
 
 namespace Bazalt\Site\Data;
 
+use Bazalt\Site\ORM\Localizable;
+
 class Validator extends \Bazalt\Data\Validator
 {
     /**
@@ -19,7 +21,7 @@ class Validator extends \Bazalt\Data\Validator
      */
     public function localizableField($name)
     {
-        $site = \Bazalt\Site::get();
+        $site = (!Localizable::getCurrentSite()) ? \Bazalt\Site::get() : Localizable::getCurrentSite();
         $languages = $site->getLanguages();
 
         $defaultLanguageValidator = Validator::create()

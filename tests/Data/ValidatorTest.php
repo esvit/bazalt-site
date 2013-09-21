@@ -3,15 +3,31 @@
 namespace tests\Data;
 
 use Bazalt\Site\Data\Validator;
+use Bazalt\Site\Model\Language;
+use Bazalt\Site\ORM\Localizable;
 
 class ValidatorTest extends \tests\BaseCase
 {
+    protected $site;
+
     protected function setUp()
     {
+        $this->site = \Bazalt\Site\Model\Site::create();
+        $this->site->id = 999;
+        $this->site->save();
+
+        Localizable::setCurrentSite($this->site);
+        Localizable::setReturnAllLanguages(false);
+
+        $this->site->addLanguage(Language::getByAlias('en'));
+        $this->site->addLanguage(Language::getByAlias('ru'));
+        $this->site->addLanguage(Language::getByAlias('uk'));
     }
 
     protected function tearDown()
     {
+        $this->site->delete();
+        Localizable::setCurrentSite(null);
     }
 
     public function testRequired()
