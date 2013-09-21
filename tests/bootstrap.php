@@ -21,8 +21,3 @@ $dbParams = array(
 
 $connectionString = new \Bazalt\ORM\Adapter\Mysql($dbParams);
 \Bazalt\ORM\Connection\Manager::add($connectionString, 'default');
-
-// create test data
-Language::create('En', 'en')->save();
-Language::create('Ru', 'ru')->save();
-Language::create('Uk', 'uk')->save();

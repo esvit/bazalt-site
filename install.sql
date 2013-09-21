@@ -64,3 +64,7 @@ CREATE TABLE IF NOT EXISTS `cms_languages_ref_sites` (
   CONSTRAINT `FK__cms_languages` FOREIGN KEY (`language_id`) REFERENCES `cms_languages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK__cms_sites` FOREIGN KEY (`site_id`) REFERENCES `cms_sites` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `cms_languages` (`id`, `title`) VALUES ('en', 'English');
+INSERT INTO `cms_languages` (`id`, `title`) VALUES ('ru', 'Русский (Russian)');
+INSERT INTO `cms_languages` (`id`, `title`) VALUES ('uk', 'Українська (Ukrainian)');
