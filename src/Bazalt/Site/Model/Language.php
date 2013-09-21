@@ -90,16 +90,10 @@ class Language extends Base\Language
      * @param $alias Language alias like 'en'
      * @return Language|null
      */
-    public static function getLanguageByAlias($alias)
+    public static function getByAlias($alias)
     {
-        $languages = self::getSiteLanguages();
-
-        foreach ($languages as $language) {
-            if ($language->id == $alias) {
-                return $language;
-            }
-        }
-        return null;
+        $q = Language::select()->where('id = ?', $alias);
+        return $q->fetch();
     }
 
     /**

@@ -13,6 +13,7 @@
 namespace Bazalt\Site\ORM;
 
 use Bazalt\ORM as ORM;
+use tests\Model\Base\Language;
 
 /**
  * Localizable Плагін, що надає змогу локалізувати поля в базі даних
@@ -32,6 +33,10 @@ class Localizable extends ORM\Plugin\AbstractPlugin
     const TRANSLATION_ORIGINAL = 1;
 
     const TRANSLATION_COMPLETED = 2;
+
+    protected static $returnAllLanguages = false;
+
+    protected static $currentSite = null;
 
     /**
      * Додає додаткові службові поля відповідно до типу локалізації.
@@ -53,12 +58,26 @@ class Localizable extends ORM\Plugin\AbstractPlugin
         }
     }
 
-    public static function onChangeLanguage($lang)
+    /**
+     * Если false, то будет возвращать только переводы для тех языков, которые есть на сайте и заданы через currentSite
+     * Если currentSite не задан, то для текущего сайта
+     *
+     * @param bool $value
+     */
+    public static function returnAllLanguages($value)
     {
-        if (!($lang instanceOf \Bazalt\Site\Model\Language)) {
-            throw new \Exception('Invalid language object');
-        }
-        self::setLanguage($lang);
+        self::$returnAllLanguages = $value;
+    }
+
+    /**
+     * Можно задать сайт, для корого будут возвращатся переводы, так как разные сайты могут иметь разные наборы языков
+     * Не играет роли, если задано $returnAllLanguages = true
+     *
+     * @param \Bazalt\Site\Model\Site|null $value
+     */
+    public static function currentSite($value)
+    {
+        self::$currentSite = $value;
     }
 
     /**
@@ -97,13 +116,17 @@ class Localizable extends ORM\Plugin\AbstractPlugin
         if (array_key_exists($field, $record->getSettedFields())) {
             return;
         }
+        $site = (self::$currentSite) ? self::$currentSite : \Bazalt\Site::get();
+
         $fields = $options[get_class($record)];
         if (is_array($fields) && in_array($field, $fields)) {
             $translates = $this->getTranslations($record);
             foreach ($fields as $field) {
                 $fieldData = [];
                 foreach ($translates as $tr) {
-                    $fieldData[$tr->lang_id] = $tr->{$field};
+                    if (self::$returnAllLanguages || $site->hasLanguage($tr->lang_id)) {
+                        $fieldData[$tr->lang_id] = $tr->{$field};
+                    }
                 }
                 $record->{$field} = $fieldData;
             }
@@ -143,7 +166,8 @@ class Localizable extends ORM\Plugin\AbstractPlugin
             return;
         }
 
-        $languages = \Bazalt\Site::get()->getLanguages();
+        $site = (self::$currentSite) ? self::$currentSite : \Bazalt\Site::get();
+        $languages = $site->getLanguages();
         $records = [];
         foreach ($languages as $lang) {
             $localRecord = new $localRecordClass();

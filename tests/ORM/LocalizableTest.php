@@ -2,6 +2,9 @@
 
 namespace tests\Data;
 
+use Bazalt\Site\Model\Language;
+use Bazalt\Site\ORM\Localizable;
+
 class LocalizableTest extends \tests\BaseCase
 {
     protected $site;
@@ -10,22 +13,31 @@ class LocalizableTest extends \tests\BaseCase
     {
         $this->site = \Bazalt\Site\Model\Site::create();
         $this->site->id = 999;
-    }
+        $this->site->save();
 
-    protected function tearDown()
-    {
-        $this->site->delete();
-    }
+        Localizable::currentSite($this->site);
 
-    public function testRequired()
-    {
+        $this->site->addLanguage(Language::getByAlias('en'));
+        $this->site->addLanguage(Language::getByAlias('ru'));
+        $this->site->addLanguage(Language::getByAlias('uk'));
+
         $this->site->title = [
             'en' => 'English title',
             'ru' => 'Русский заголовок',
             'uk' => 'Українська назва'
         ];
         $this->site->save();
+    }
 
+    protected function tearDown()
+    {
+        $this->site->delete();
+
+        Localizable::currentSite(null);
+    }
+
+    public function testRequired()
+    {
         $q = new \Bazalt\ORM\Query('SELECT title FROM cms_sites_locale WHERE id = :siteId AND lang_id = :languageId',
                                     ['siteId' => $this->site->id, 'languageId' => 'ru']);
         $obj = $q->fetch();
@@ -86,5 +98,13 @@ class LocalizableTest extends \tests\BaseCase
             'ru' => 'Русский заголовок',
             'uk' => 'Українська назва'
         ]);
+
+        $this->site->removeLanguage(Language::getByAlias('ru'));
+
+        $site = \Bazalt\Site\Model\Site::getById(999);
+        $this->assertEquals([
+            'en' => 'English title',
+            'uk' => 'Українська назва'
+        ], $site->title);
     }
 }

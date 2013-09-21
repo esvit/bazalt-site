@@ -2,7 +2,6 @@ DROP TABLE IF EXISTS `cms_languages`;
 CREATE TABLE IF NOT EXISTS `cms_languages` (
   `id` varchar(2) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `ico` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

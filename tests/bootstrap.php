@@ -3,6 +3,7 @@
 namespace tests;
 
 use Bazalt\Site\Model\Language;
+use Bazalt\Site\Model\LanguageRefSite;
 
 require_once (is_file(__DIR__ . '/../vendor/autoload.php') ? (__DIR__ . '/../vendor/autoload.php') : '../vendor/autoload.php');
 

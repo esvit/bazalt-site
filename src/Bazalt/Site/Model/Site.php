@@ -13,12 +13,14 @@ class Site extends Base\Site
     public static function create()
     {
         $site = new Site();
+        $site->language_id = 'en';
+        $site->languages = 'en';
         return $site;
     }
 
     public static function getSiteByDomain($domain, $onlyActive = true)
     {
-         $q = ORM::select('Bazalt\Site\Model\Site s')
+         $q = ORM::select('Bazalt\\Site\\Model\\Site s')
                  ->where('s.domain = ?', $domain);
 
          if ($onlyActive) {
@@ -51,7 +53,29 @@ class Site extends Base\Site
 
     public function addLanguage(Language $language)
     {
-        $this->Languages->add($language, array('is_active' => 1));
+        $this->Languages->add($language, ['is_active' => 1]);
+
+        $langs = explode(',', $this->languages);
+        $langs []= $language->id;
+        $langs = array_unique($langs);
+        $this->languages = implode(',', $langs);
+        $this->save();
+        if ($this->_languages) {
+            $this->_languages[$language->id] = $language;
+        }
+    }
+
+    public function removeLanguage(Language $language)
+    {
+        $this->Languages->remove($language);
+
+        $langs = explode(',', $this->languages);
+        $langs = array_diff($langs, [$language->id]);
+        $this->languages = implode(',', $langs);
+        $this->save();
+        if ($this->_languages) {
+            unset($this->_languages[$language->id]);
+        }
     }
 
     /**
@@ -75,5 +99,10 @@ class Site extends Base\Site
             }
         }
         return $this->_languages;
+    }
+
+    public function hasLanguage($alias)
+    {
+        return in_array($alias, explode(',', $this->languages));
     }
 }

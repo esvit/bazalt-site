@@ -54,20 +54,20 @@ abstract class Site extends \Bazalt\ORM\Record
         $this->hasRelation('Site', new \Bazalt\ORM\Relation\One2One(self::MODEL_NAME, 'site_id', 'id'));
         $this->hasRelation('Mirrors', new \Bazalt\ORM\Relation\One2Many(self::MODEL_NAME, 'id', 'site_id'));
 
-        $this->hasRelation('Theme', new \Bazalt\ORM\Relation\One2One('Framework\CMS\Model\Theme', 'theme_id', 'id'));
+        $this->hasRelation('Theme', new \Bazalt\ORM\Relation\One2One('Bazalt\\Site\\Model\\Theme', 'theme_id', 'id'));
 
-        $this->hasRelation('Components', new \Bazalt\ORM\Relation\Many2Many('Framework\CMS\Model\Component', 'site_id', 'Framework\CMS\Model\ComponentRefSite', 'component_id'));
-        $this->hasRelation('Options', new \Bazalt\ORM\Relation\One2Many('Framework\CMS\Model\Option', 'id', 'site_id'));
-        $this->hasRelation('Users', new \Bazalt\ORM\Relation\Many2Many('Framework\CMS\Model\User', 'site_id', 'Framework\CMS\Model\SiteRefUser', 'user_id'));
-        $this->hasRelation('Widgets', new \Bazalt\ORM\Relation\One2Many('Framework\CMS\Model\WidgetInstance', 'id', 'site_id'));
+        //$this->hasRelation('Components', new \Bazalt\ORM\Relation\Many2Many('Framework\CMS\Model\Component', 'site_id', 'Framework\CMS\Model\ComponentRefSite', 'component_id'));
+        //$this->hasRelation('Options', new \Bazalt\ORM\Relation\One2Many('Framework\CMS\Model\Option', 'id', 'site_id'));
+        //$this->hasRelation('Users', new \Bazalt\ORM\Relation\Many2Many('Framework\CMS\Model\User', 'site_id', 'Framework\CMS\Model\SiteRefUser', 'user_id'));
+        //$this->hasRelation('Widgets', new \Bazalt\ORM\Relation\One2Many('Framework\CMS\Model\WidgetInstance', 'id', 'site_id'));
 
-        $this->hasRelation('DefaultLanguage', new \Bazalt\ORM\Relation\One2One('Framework\CMS\Model\Language', 'language_id', 'id'));
-        $this->hasRelation('Languages', new \Bazalt\ORM\Relation\Many2Many('Framework\CMS\Model\Language', 'site_id', 'Framework\CMS\Model\LanguageRefSite', 'language_id'));
+        $this->hasRelation('DefaultLanguage', new \Bazalt\ORM\Relation\One2One('Bazalt\\Site\\Model\\Language', 'language_id', 'id'));
+        $this->hasRelation('Languages', new \Bazalt\ORM\Relation\Many2Many('Bazalt\\Site\\Model\\Language', 'site_id', 'Bazalt\\Site\\Model\\LanguageRefSite', 'language_id'));
     }
 
     public function initPlugins()
     {
-        $this->hasPlugin('Bazalt\Site\ORM\Localizable', ['title']);
-        $this->hasPlugin('Bazalt\ORM\Plugin\Timestampable', ['created' => 'created_at', 'updated' => 'updated_at']);
+        $this->hasPlugin('Bazalt\\Site\\ORM\\Localizable', ['title']);
+        $this->hasPlugin('Bazalt\\ORM\\Plugin\\Timestampable', ['created' => 'created_at', 'updated' => 'updated_at']);
     }
 }
