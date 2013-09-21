@@ -24,7 +24,7 @@ abstract class Site extends \Bazalt\ORM\Record
 {
     const TABLE_NAME = 'cms_sites';
 
-    const MODEL_NAME = 'Bazalt\Site\Model\Site';
+    const MODEL_NAME = 'Bazalt\\Site\\Model\\Site';
 
     public function __construct()
     {

@@ -6,7 +6,7 @@ abstract class LanguageRefSite extends \Bazalt\ORM\Record
 {
     const TABLE_NAME = 'cms_languages_ref_sites';
 
-    const MODEL_NAME = 'Bazalt\Site\Model\LanguageRefSite';
+    const MODEL_NAME = 'Bazalt\\Site\\Model\\LanguageRefSite';
 
     public function __construct()
     {
@@ -21,10 +21,6 @@ abstract class LanguageRefSite extends \Bazalt\ORM\Record
     }
 
     public function initRelations()
-    {
-    }
-
-    public function initPlugins()
     {
     }
 }

@@ -9,34 +9,17 @@ class Language extends Base\Language
     protected $is_default = null;
 
     /**
-     * Event OnAdd
-     *
-     * @var Event
-     *   Event::trigger('CMS_Model_Language', 'OnAdd', array($a, 'en'));
-     */
-    //public $eventOnAdd = \Framework\Core\Event::EMPTY_EVENT;
-
-    /**
-     * Event OnRemove
-     *
-     * @var Event
-     */
-    //public $eventOnRemove = \Framework\Core\Event::EMPTY_EVENT;
-
-    /**
      * Create language
      *
      * @param string $title Language title
-     * @param string $alias Language alias
-     * @param string $ico   Language icon
+     * @param string $id    Language alias
      * @return Language
      */
-    public static function create($title, $id, $ico)
+    public static function create($title, $id)
     {
         $lang = new Language();
-        $lang->title = $title;
         $lang->id = $id;
-        $lang->ico = $ico;
+        $lang->title = $title;
 
         $lang->save();
         //Event::trigger('CMS_Model_Language', 'OnAdd', array($lang, $alias));

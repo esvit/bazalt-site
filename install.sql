@@ -6,7 +6,6 @@ CREATE TABLE IF NOT EXISTS `cms_languages` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
 DROP TABLE IF EXISTS `cms_themes`;
 CREATE TABLE IF NOT EXISTS `cms_themes` (
   `id` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'default',
@@ -15,7 +14,6 @@ CREATE TABLE IF NOT EXISTS `cms_themes` (
   `is_hidden` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 
 DROP TABLE IF EXISTS `cms_sites`;
 CREATE TABLE IF NOT EXISTS `cms_sites` (
@@ -44,7 +42,6 @@ CREATE TABLE IF NOT EXISTS `cms_sites` (
   CONSTRAINT `FK_cms_sites_cms_themes` FOREIGN KEY (`theme_id`) REFERENCES `cms_themes` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
 DROP TABLE IF EXISTS `cms_sites_locale`;
 CREATE TABLE IF NOT EXISTS `cms_sites_locale` (
   `id` int(10) unsigned NOT NULL,
@@ -56,7 +53,6 @@ CREATE TABLE IF NOT EXISTS `cms_sites_locale` (
   CONSTRAINT `FK_cms_sites_locale_cms_languages` FOREIGN KEY (`lang_id`) REFERENCES `cms_languages` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `FK_cms_sites_locale_cms_sites` FOREIGN KEY (`id`) REFERENCES `cms_sites` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 
 DROP TABLE IF EXISTS `cms_languages_ref_sites`;
 CREATE TABLE IF NOT EXISTS `cms_languages_ref_sites` (

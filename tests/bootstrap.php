@@ -2,6 +2,8 @@
 
 namespace tests;
 
+use Bazalt\Site\Model\Language;
+
 require_once (is_file(__DIR__ . '/../vendor/autoload.php') ? (__DIR__ . '/../vendor/autoload.php') : '../vendor/autoload.php');
 
 $loader = new \Composer\Autoload\ClassLoader();
@@ -18,3 +20,8 @@ $dbParams = array(
 
 $connectionString = new \Bazalt\ORM\Adapter\Mysql($dbParams);
 \Bazalt\ORM\Connection\Manager::add($connectionString, 'default');
+
+// create test data
+Language::create('En', 'en')->save();
+Language::create('Ru', 'ru')->save();
+Language::create('Uk', 'uk')->save();
