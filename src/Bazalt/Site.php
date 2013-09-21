@@ -23,7 +23,7 @@ class Site
      */
     public static function getProtocol()
     {
-        return ($_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://';
+        return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://';
     }
 
     public static function needPortInDomain()
@@ -37,7 +37,7 @@ class Site
     /**
      * Return current server name
      *
-     * @return string like "bazalt-cms.com" or "bazalt-cms.com:8080"
+     * @return string like "http://bazalt-cms.com" or "https://bazalt-cms.com:8080"
      */
     public static function getDomain()
     {
@@ -58,7 +58,7 @@ class Site
         }
         $serverName .= !self::needPortInDomain() ? '' : ':' . $_SERVER['SERVER_PORT'];
 
-        return $serverName;
+        return self::getProtocol() . $serverName;
     }
 
     public static function getDomainName()

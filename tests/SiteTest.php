@@ -14,17 +14,25 @@ class SiteTest extends \tests\BaseCase
 
     protected function tearDown()
     {
+        $_SERVER['SERVER_PORT'] = '80';
+        $_SERVER['HTTPS'] = 'off';
     }
 
-    public function testGet()
+    public function testGetDomain()
     {
         $_SERVER['SERVER_NAME'] = 'bazalt-cms.com';
-        $this->assertEquals('bazalt-cms.com', Site::getDomainName());
+        $this->assertEquals('http://bazalt-cms.com', Site::getDomain());
+
+        $_SERVER['HTTPS'] = 'on';
+        $this->assertEquals('https://bazalt-cms.com', Site::getDomain());
+
+        $_SERVER['SERVER_PORT'] = '145';
+        $this->assertEquals('https://bazalt-cms.com:145', Site::getDomain());
     }
 
     /**
-     * @expectedException Exception
-     
+     * @expectedException \Bazalt\Site\Exception\DomainNotFound
+
     public function testFetchError()
     {
         //$this->assertEquals('-', $this->view->fetch('test-invalid'));
