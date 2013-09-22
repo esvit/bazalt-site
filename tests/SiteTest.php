@@ -33,6 +33,18 @@ class SiteTest extends \tests\BaseCase
         $this->assertEquals('https://bazalt-cms.com:145', Site::getDomain());
     }
 
+    public function testGetDomainName()
+    {
+        $_SERVER['SERVER_NAME'] = 'bazalt-cms.com';
+        $this->assertEquals('bazalt-cms.com', Site::getDomainName());
+
+        $_SERVER['HTTPS'] = 'on';
+        $this->assertEquals('bazalt-cms.com', Site::getDomainName());
+
+        $_SERVER['SERVER_PORT'] = '145';
+        $this->assertEquals('bazalt-cms.com', Site::getDomainName());
+    }
+
     /**
      * @expectedException \Bazalt\Site\Exception\DomainNotFound
 

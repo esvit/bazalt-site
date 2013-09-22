@@ -64,6 +64,10 @@ class Site
     public static function getDomainName()
     {
         $domain = strToLower(self::getDomain());
+        // remove protocol
+        if (strpos($domain, '://') !== false) {
+            $domain = substr($domain, strpos($domain, '://') + 3);
+        }
         // remove port
         if (strpos($domain, ':') !== false) {
             $domain = substr($domain, 0, strpos($domain, ':'));
@@ -111,12 +115,11 @@ class Site
                 }
             }
         }
-        if ($site->is_redirect && $site->site_id) {
-            header('Location: ' . self::getProtocol() . $site->Site->domain);
-        }
-
         if (!$site) {
             throw new Site\Exception\DomainNotFound($domain);
+        }
+        if ($site->is_redirect && $site->site_id) {
+            header('Location: ' . self::getProtocol() . $site->Site->domain);
         }
         return $site;
     }
