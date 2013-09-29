@@ -31,6 +31,10 @@ class SiteTest extends \tests\BaseCase
 
         $_SERVER['SERVER_PORT'] = '145';
         $this->assertEquals('https://bazalt-cms.com:145', Site::getDomain());
+
+        $_SERVER['HTTP_ORIGIN'] = 'http://localhost';
+        $this->assertEquals('http://localhost', Site::getDomain());
+        unset($_SERVER['HTTP_ORIGIN']);
     }
 
     public function testGetDomainName()
@@ -43,12 +47,16 @@ class SiteTest extends \tests\BaseCase
 
         $_SERVER['SERVER_PORT'] = '145';
         $this->assertEquals('bazalt-cms.com', Site::getDomainName());
+
+        $_SERVER['HTTP_ORIGIN'] = 'http://localhost';
+        $this->assertEquals('localhost', Site::getDomainName());
+        unset($_SERVER['HTTP_ORIGIN']);
     }
 
     /**
      * @expectedException \Bazalt\Site\Exception\DomainNotFound
 
-    public function testFetchError()
+    public function testFetchError()1
     {
         //$this->assertEquals('-', $this->view->fetch('test-invalid'));
     }*/

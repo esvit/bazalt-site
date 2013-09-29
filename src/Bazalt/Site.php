@@ -41,11 +41,14 @@ class Site
      */
     public static function getDomain()
     {
-        if (!isset($_SERVER['SERVER_NAME'])) {
+        $serverName = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : null;
+        if (isset($_SERVER['HTTP_ORIGIN'])) {
+            return $_SERVER['HTTP_ORIGIN'];
+        }
+        if (!$serverName) {
             // when in cli mode
             return null;
         }
-        $serverName = $_SERVER['SERVER_NAME'];
 
         if (substr($serverName, 0, strLen(self::PUNYCODE_PREFIX)) == self::PUNYCODE_PREFIX) {
             $convertor = new \Bazalt\Site\IDNConvertor(array('idn_version' => 2008));
