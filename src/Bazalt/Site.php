@@ -44,9 +44,10 @@ class Site
     public static function getDomain()
     {
         $serverName = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : null;
-        if (isset($_SERVER['HTTP_ORIGIN'])) {
+        // CORS
+        /*if (isset($_SERVER['HTTP_ORIGIN'])) {
             return $_SERVER['HTTP_ORIGIN'];
-        }
+        }*/
         if (!$serverName) {
             // when in cli mode
             return null;
