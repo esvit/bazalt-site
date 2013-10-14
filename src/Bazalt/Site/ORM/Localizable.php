@@ -43,7 +43,7 @@ class Localizable extends ORM\Plugin\AbstractPlugin
      * Викликається в момент ініціалізації моделі
      *
      * @param ORM\Record $model   Модель, для якої викликано initFields
-     * @param array       $fields  Масив опцій, передається з базової моделі при ініціалізації плагіна
+     * @param array $fields  Масив опцій, передається з базової моделі при ініціалізації плагіна
      *
      * @return void
      */
@@ -89,22 +89,22 @@ class Localizable extends ORM\Plugin\AbstractPlugin
      * Ініціалізує плагін
      *
      * @param \Bazalt\ORM\Record $model   Модель, для якої викликано initFields
-     * @param array       $options Масив опцій, передається з базової моделі при ініціалізації плагіна
+     * @param array $options Масив опцій, передається з базової моделі при ініціалізації плагіна
      *
      * @return void
      */
     public function init(ORM\Record $model, $options)
     {
-        ORM\BaseRecord::registerEvent(get_class($model), ORM\BaseRecord::ON_FIELD_GET, array($this,'onGet'), ORM\BaseRecord::FIELD_NOT_SETTED);
-        ORM\BaseRecord::registerEvent(get_class($model), ORM\BaseRecord::ON_RECORD_SAVE, array($this,'onSave'));
+        ORM\BaseRecord::registerEvent(get_class($model), ORM\BaseRecord::ON_FIELD_GET, array($this, 'onGet'), ORM\BaseRecord::FIELD_NOT_SETTED);
+        ORM\BaseRecord::registerEvent(get_class($model), ORM\BaseRecord::ON_RECORD_SAVE, array($this, 'onSave'));
     }
 
     /**
      * Хендлер на евент onGet моделей які юзають плагін.
      * Евент запалюється при виклику __get() для поля і повертає локалізоване значення
      *
-     * @param ORM\Record   $record  Поточний запис
-     * @param string      $field   Поле для якого викликається __get()
+     * @param ORM\Record $record  Поточний запис
+     * @param string $field   Поле для якого викликається __get()
      * @param bool|string &$return Результат, який повернеться методом __get()
      *
      * @throws \Exception
@@ -126,14 +126,16 @@ class Localizable extends ORM\Plugin\AbstractPlugin
         $fields = $options[get_class($record)];
         if (is_array($fields) && in_array($field, $fields)) {
             $translates = $this->getTranslations($record);
-            foreach ($fields as $field) {
-                $fieldData = [];
-                foreach ($translates as $tr) {
-                    if (self::$returnAllLanguages || $site->hasLanguage($tr->lang_id)) {
-                        $fieldData[$tr->lang_id] = $tr->{$field};
+            if ($translates) {
+                foreach ($fields as $field) {
+                    $fieldData = [];
+                    foreach ($translates as $tr) {
+                        if (self::$returnAllLanguages || $site->hasLanguage($tr->lang_id)) {
+                            $fieldData[$tr->lang_id] = $tr->{$field};
+                        }
                     }
+                    $record->{$field} = $fieldData;
                 }
-                $record->{$field} = $fieldData;
             }
         }
     }
@@ -144,7 +146,7 @@ class Localizable extends ORM\Plugin\AbstractPlugin
      * у локалізовані запис
      *
      * @param ORM\Record $record  Поточний запис
-     * @param bool      &$return Флаг, який зупиняє подальше виконання save()
+     * @param bool &$return Флаг, який зупиняє подальше виконання save()
      *
      * @return void
      */
@@ -183,8 +185,9 @@ class Localizable extends ORM\Plugin\AbstractPlugin
                 $fieldName = $column->name();
                 if (in_array($fieldName, $fields) && array_key_exists($fieldName, $record->getSettedFields())) {
                     $data = $record->getField($fieldName);
-                    if ( (is_array($data) && isset($data[$lang->id]))
-                      || (is_object($data) && isset($data->{$lang->id})) ) {
+                    if ((is_array($data) && isset($data[$lang->id]))
+                        || (is_object($data) && isset($data->{$lang->id}))
+                    ) {
 
                         $isFilled = true;
                         $localRecord->$fieldName = is_array($data) ? $data[$lang->id] : $data->{$lang->id};
@@ -192,7 +195,7 @@ class Localizable extends ORM\Plugin\AbstractPlugin
                 }
             }
             if ($isFilled) {
-                $records []= $localRecord;
+                $records [] = $localRecord;
             }
         }
         foreach ($fields as $field) {
@@ -235,18 +238,20 @@ class Localizable extends ORM\Plugin\AbstractPlugin
     {
         $tr = self::getTranslations($record);
 
-        foreach ($fields as $field) {
-            $itemArray[$field] = [];
-            $lastLangAlias = null;
-            foreach ($tr as $item) {
-                $lastLangAlias = $item->lang_id;
-                $itemArray[$field][$lastLangAlias] = $item->{$field};
-                if ($item->completed == Localizable::TRANSLATION_ORIGINAL) {
-                    $itemArray[$field]['orig'] = $item->lang_id;
+        if ($tr) {
+            foreach ($fields as $field) {
+                $itemArray[$field] = [];
+                $lastLangAlias = null;
+                foreach ($tr as $item) {
+                    $lastLangAlias = $item->lang_id;
+                    $itemArray[$field][$lastLangAlias] = $item->{$field};
+                    if ($item->completed == Localizable::TRANSLATION_ORIGINAL) {
+                        $itemArray[$field]['orig'] = $item->lang_id;
+                    }
                 }
-            }
-            if (!isset($itemArray[$field]['orig'])) {
-                $itemArray[$field]['orig'] = $lastLangAlias;
+                if (!isset($itemArray[$field]['orig'])) {
+                    $itemArray[$field]['orig'] = $lastLangAlias;
+                }
             }
         }
         return $itemArray;

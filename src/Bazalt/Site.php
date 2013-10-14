@@ -8,6 +8,8 @@ class Site
 
     protected static $enableMultisiting = false;
 
+    protected static $currentSite = null;
+
     public static function enableMultisiting($enableMultisiting = null)
     {
         if ($enableMultisiting !== null) {
@@ -93,6 +95,9 @@ class Site
      */
     public static function get()
     {
+        if (self::$currentSite) {
+            return self::$currentSite;
+        }
         $domain = self::getDomainName();
         
         if (!self::$enableMultisiting || TESTING_STAGE) {
@@ -124,6 +129,12 @@ class Site
         if ($site->is_redirect && $site->site_id) {
             header('Location: ' . self::getProtocol() . $site->Site->domain);
         }
+        self::$currentSite = $site;
         return $site;
+    }
+
+    public static function setCurrent(\Bazalt\Site\Model\Site $site)
+    {
+        self::$currentSite = $site;
     }
 }

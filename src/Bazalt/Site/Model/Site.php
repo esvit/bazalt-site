@@ -15,6 +15,7 @@ class Site extends Base\Site
         $site = new Site();
         $site->language_id = 'en';
         $site->languages = 'en';
+        $site->is_allow_indexing = 0;
         return $site;
     }
 
@@ -122,5 +123,24 @@ class Site extends Base\Site
     public function hasLanguage($alias)
     {
         return in_array($alias, explode(',', $this->languages));
+    }
+
+    public static function getCollection()
+    {
+        $q = Site::select();
+
+        return new \Bazalt\ORM\Collection($q);
+    }
+
+    public function toArray()
+    {
+        $res = parent::toArray();
+
+        $res['is_subdomain'] = $this->is_subdomain == '1';
+        $res['is_active'] = $this->is_active == '1';
+        $res['is_multilingual'] = $this->is_multilingual == '1';
+        $res['is_allow_indexing'] = $this->is_allow_indexing == '1';
+        $res['is_redirect'] = $this->is_redirect == '1';
+        return $res;
     }
 }
