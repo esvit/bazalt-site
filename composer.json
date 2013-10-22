@@ -17,6 +17,7 @@
         "analog/analog": "dev-master",
         "bazalt/orm": "dev-master",
         "bazalt/data": "dev-master",
+        "bazalt/rest": "dev-master",
         "symfony/event-dispatcher": "*"
     },
     "require-dev": {
