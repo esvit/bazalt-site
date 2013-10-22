@@ -76,7 +76,6 @@ CREATE TABLE `cms_options` (
 	`updated_at` DATETIME NULL,
 	PRIMARY KEY (`id`),
 	UNIQUE INDEX `site_id_name` (`site_id`, `name`),
-	INDEX `component_id` (`component_id`),
 	CONSTRAINT `FK_cms_options_cms_sites` FOREIGN KEY (`site_id`) REFERENCES `cms_sites` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
 )
 COMMENT='Options of site'
