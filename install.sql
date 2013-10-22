@@ -65,6 +65,24 @@ CREATE TABLE IF NOT EXISTS `cms_languages_ref_sites` (
   CONSTRAINT `FK__cms_sites` FOREIGN KEY (`site_id`) REFERENCES `cms_sites` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+
+DROP TABLE IF EXISTS `cms_options`;
+CREATE TABLE `cms_options` (
+	`site_id` INT(10) UNSIGNED NULL DEFAULT NULL,
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(255) NOT NULL,
+	`value` TEXT NULL,
+	`created_at` DATETIME NULL,
+	`updated_at` DATETIME NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE INDEX `site_id_name` (`site_id`, `name`),
+	INDEX `component_id` (`component_id`),
+	CONSTRAINT `FK_cms_options_cms_sites` FOREIGN KEY (`site_id`) REFERENCES `cms_sites` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+)
+COMMENT='Options of site'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB;
+
 INSERT INTO `cms_languages` (`id`, `title`) VALUES ('en', 'English');
 INSERT INTO `cms_languages` (`id`, `title`) VALUES ('ru', 'Русский (Russian)');
 INSERT INTO `cms_languages` (`id`, `title`) VALUES ('uk', 'Українська (Ukrainian)');
