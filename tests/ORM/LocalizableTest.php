@@ -5,7 +5,7 @@ namespace tests\Data;
 use Bazalt\Site\Model\Language;
 use Bazalt\Site\ORM\Localizable;
 
-class LocalizableTest extends \tests\BaseCase
+class LocalizableTest extends \Bazalt\Site\Test\BaseCase
 {
     protected $site;
 

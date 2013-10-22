@@ -12,6 +12,8 @@
          bootstrap="tests/bootstrap.php"
 >
     <php>
+        <env name="APPLICATION_ENV" value="testing"/>
+
         <ini name="intl.default_locale" value="en"/>
         <ini name="intl.error_level" value="0"/>
         <ini name="memory_limit" value="-1"/>

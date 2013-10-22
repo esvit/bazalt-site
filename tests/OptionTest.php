@@ -4,16 +4,8 @@ namespace tests;
 
 use Bazalt\Site\Option;
 
-class OptionTest extends \tests\BaseCase
+class OptionTest extends \Bazalt\Site\Test\BaseCase
 {
-    protected function setUp()
-    {
-    }
-
-    protected function tearDown()
-    {
-    }
-
     public function testCryptOption()
     {
         $this->assertEquals(Option::cryptOption('test'), 'FZhR9XYytydxNFDRJRTyCw==');
@@ -28,24 +20,24 @@ class OptionTest extends \tests\BaseCase
 
     public function testGetForSite()
     {
-        $this->assertEquals('t', Option::getForSite('gqtest', 1, 't'));//non exists
+        $this->assertEquals('t', Option::getForSite('gqtest', $this->site->id, 't'));//non exists
 
-        Option::set('gtest', 'testValue', 1, 't');
-        $this->assertEquals('testValue', Option::getForSite('gtest', 1, 't'));
+        Option::set('gtest', 'testValue', $this->site->id, 't');
+        $this->assertEquals('testValue', Option::getForSite('gtest', $this->site->id, 't'));
     }
 
     public function testSet()
     {
-        Option::set('gtest', 'testValue2', 1, 't');
-        $this->assertEquals('testValue2', Option::getForSite('gtest', 1, 't'));
+        Option::set('gtest', 'testValue2', $this->site->id, 't');
+        $this->assertEquals('testValue2', Option::getForSite('gtest', $this->site->id, 't'));
 
-        Option::set('gtest', 'testValue3', 1, 't', true);
-        $this->assertEquals('testValue3', Option::getForSite('gtest', 1, 't', true));
+        Option::set('gtest', 'testValue3', $this->site->id, 't', true);
+        $this->assertEquals('testValue3', Option::getForSite('gtest', $this->site->id, 't', true));
     }
 
     public function testDelete()
     {
-        Option::delete('gtest', 1);
-        $this->assertEquals('t', Option::getForSite('gtest', 1, 't'));//non exists
+        Option::delete('gtest', $this->site->id);
+        $this->assertEquals('t', Option::getForSite('gtest', $this->site->id, 't'));//non exists
     }
 }

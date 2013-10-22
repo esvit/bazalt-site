@@ -4,7 +4,7 @@ namespace tests\Data;
 
 use Bazalt\Site\Model\Language;
 
-class SiteTest extends \tests\BaseCase
+class SiteTest extends \Bazalt\Site\Test\BaseCase
 {
     /**
      * @var \Bazalt\Site\Model\Site

@@ -134,7 +134,7 @@ class Site
         return $site;
     }
 
-    public static function setCurrent(\Bazalt\Site\Model\Site $site)
+    public static function setCurrent($site)
     {
         self::$currentSite = $site;
     }

@@ -6,7 +6,7 @@ use Bazalt\Site\Data\Validator;
 use Bazalt\Site\Model\Language;
 use Bazalt\Site\ORM\Localizable;
 
-class ValidatorTest extends \tests\BaseCase
+class ValidatorTest extends \Bazalt\Site\Test\BaseCase
 {
     protected $site;
 

@@ -2,7 +2,7 @@
 
 namespace tests\Data;
 
-class OptionTest extends \tests\BaseCase
+class OptionTest extends \Bazalt\Site\Test\BaseCase
 {
     /**
      * @var \Bazalt\Site\Model\Option
@@ -16,40 +16,40 @@ class OptionTest extends \tests\BaseCase
 
     protected function setUp()
     {
-        $this->site = \Bazalt\Site\Model\Site::create();
-        $this->site->id = 1;
-        $this->site->save();
+        parent::setUp();
         
         $this->option = new \Bazalt\Site\Model\Option();
         $this->option->name = 'test';
         $this->option->value = 'testValue';
-        $this->option->site_id = 1;
+        $this->option->site_id = $this->site->id;
         $this->option->save();
     }
 
     protected function tearDown()
     {
-        $this->site->delete();
+        parent::tearDown();
+
+        $this->option->delete();
     }
 
     public function testGet()
     {
-        $opt = \Bazalt\Site\Model\Option::get('test', 1);
+        $opt = \Bazalt\Site\Model\Option::get('test', $this->site->id);
         $this->assertEquals('testValue', $opt->value);
     }
 
     public function testSet()
     {
-        $opt = \Bazalt\Site\Model\Option::set('test', 'testValue2');
+        $opt = \Bazalt\Site\Model\Option::set('test', 'testValue2', $this->site->id);
         $this->assertEquals('testValue2', $opt->value);
 
-        $opt = \Bazalt\Site\Model\Option::get('test', 1);
+        $opt = \Bazalt\Site\Model\Option::get('test', $this->site->id);
         $this->assertEquals('testValue2', $opt->value);
     }
 
     public function testGetSiteOptions()
     {
-        $opts = \Bazalt\Site\Model\Option::getSiteOptions(1);
+        $opts = \Bazalt\Site\Model\Option::getSiteOptions($this->site->id);
         $this->assertEquals(1, count($opts));
         $this->assertEquals('testValue', $opts[0]->value);
     }

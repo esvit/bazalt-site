@@ -4,16 +4,14 @@ namespace tests;
 
 use Bazalt\Site;
 
-class SiteTest extends \tests\BaseCase
+class SiteTest extends \Bazalt\Site\Test\BaseCase
 {
     protected $view;
 
-    protected function setUp()
-    {
-    }
-
     protected function tearDown()
     {
+        parent::tearDown();
+
         $_SERVER['SERVER_PORT'] = '80';
         $_SERVER['HTTPS'] = 'off';
     }
