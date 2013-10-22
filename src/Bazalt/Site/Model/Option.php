@@ -3,144 +3,60 @@
 namespace Bazalt\Site\Model;
 use Bazalt\ORM;
 
-/**
- * @property Site|null originalSite Оригінальний сайт, з якого був здійснений редірект
- */
-class Site extends Base\Site
+
+class Option extends Base\Option
 {
-    private $_languages = null;
-
-    public static function create()
+    public static function set($name, $value, $componentId = null, $siteId = null)
     {
-        $site = new Site();
-        $site->language_id = 'en';
-        $site->languages = 'en';
-        $site->is_allow_indexing = 0;
-        return $site;
-    }
-
-    public static function getSiteByDomain($domain, $onlyActive = true)
-    {
-         $q = ORM::select('Bazalt\\Site\\Model\\Site s')
-                 ->where('s.domain = ?', $domain);
-
-         if ($onlyActive) {
-             $q->andWhere('s.is_active = ?', 1);
-         }
-         return $q->fetch();
-    }
-
-    public static function getSiteMirrors($site)
-    {
-        $siteId = $site->id;
-        if ($site->site_id) {
-            $siteId = $site->site_id;
+        $res = self::get($name, $siteId);
+        if ($siteId == null) {
+            $siteId = \Bazalt\Site::getId();
         }
-        $mirrors = ORM::select('Bazalt\Site\Model\Site s')
-            ->where('s.site_id = ?', $siteId)
-            ->fetchAll();
-        return $mirrors;
-    }
 
-    public function getUrl()
-    {
-        return 'http://' . $this->domain . $this->path;
-    }
-
-    public function getMirrors()
-    {
-        return self::getSiteMirrors($this);
-    }
-
-    /**
-     * Добавляет язык на сайт
-     *
-     * @param Language $language
-     */
-    public function addLanguage(Language $language)
-    {
-        $this->Languages->add($language, ['is_active' => 1]);
-
-        $langs = explode(',', $this->languages);
-        $langs []= $language->id;
-        $langs = array_unique($langs);
-        $this->languages = implode(',', $langs);
-        $this->save();
-        if ($this->_languages) {
-            $this->_languages[$language->id] = $language;
+        if ($res == null || $res->site_id != $siteId) {
+            $res = new Option();
+            $res->name = $name;
+            $res->site_id = $siteId;
         }
-    }
+        $res->value = $value;
+        $res->component_id = $componentId;
+        $res->save();
 
-    /**
-     * Удаляет язык с сайта
-     *
-     * @param Language $language
-     */
-    public function removeLanguage(Language $language)
-    {
-        $this->Languages->remove($language);
-
-        $langs = explode(',', $this->languages);
-        $langs = array_diff($langs, [$language->id]);
-        $this->languages = implode(',', $langs);
-        $this->save();
-        if ($this->_languages) {
-            unset($this->_languages[$language->id]);
-        }
-    }
-
-    /**
-     * Возвращает все языки, которые доступны на сайте
-     *
-     * @return Language[]
-     */
-    public function getLanguages()
-    {
-        if (!$this->_languages) {
-            $langs = explode(',', $this->languages);
-            $q = Language::select()->whereIn('id', $langs);
-            $languages = $q->fetchAll();
-            $this->_languages = [];
-
-            // fill array in order of $this->languages
-            foreach ($langs as $l) {
-                foreach ($languages as $lang) {
-                    if ($lang->id == $l) {
-                        $this->_languages[$lang->id] = $lang;
-                    }
-                }
-            }
-        }
-        return $this->_languages;
-    }
-
-    /**
-     * Проверяет наличие языка на сайте
-     *
-     * @param $alias
-     * @return bool
-     */
-    public function hasLanguage($alias)
-    {
-        return in_array($alias, explode(',', $this->languages));
-    }
-
-    public static function getCollection()
-    {
-        $q = Site::select();
-
-        return new \Bazalt\ORM\Collection($q);
-    }
-
-    public function toArray()
-    {
-        $res = parent::toArray();
-
-        $res['is_subdomain'] = $this->is_subdomain == '1';
-        $res['is_active'] = $this->is_active == '1';
-        $res['is_multilingual'] = $this->is_multilingual == '1';
-        $res['is_allow_indexing'] = $this->is_allow_indexing == '1';
-        $res['is_redirect'] = $this->is_redirect == '1';
         return $res;
+    }
+
+    public static function get($name, $siteId = null)
+    {
+        $opt = false;
+        if ($siteId == null) {
+            $siteId = \Bazalt\Site::getId();
+        }
+
+        $q = Option::select()
+            ->where('name = ?', $name)
+            ->andWhere('site_id = ?', $siteId);
+        $opt = $q->fetch();
+
+        if (!$opt) {
+            $q = Option::select()
+                ->where('name = ?', $name)
+                ->andWhere('site_id IS NULL');
+
+            $opt = $q->fetch();
+        }
+        return $opt;
+    }
+
+    public static function getSiteOptions($siteId = null)
+    {
+        if ($siteId == null) {
+            $siteId = \Bazalt\Site::getId();
+        }
+
+        $q = Option::select()
+            ->where('site_id IS NULL OR site_id = ?', $siteId)
+            ->orderBy('site_id');
+
+        return $q->fetchAll();
     }
 }

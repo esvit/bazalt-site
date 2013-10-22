@@ -1,6 +1,8 @@
 <?php
 
-class CMS_Option
+namespace Bazalt;
+
+class Option
 {
     const DEFAULT_KEYPASS = 'bazalt';
 
@@ -61,7 +63,7 @@ class CMS_Option
         if (isset(self::$options[$siteId][$name])) {
             unset(self::$options[$siteId][$name]);
         }
-        $res = CMS_Model_Option::get($name, $componentId, $siteId);
+        $res = \Bazalt\Site\Model\Option::get($name, $componentId, $siteId);
         if ($res) {
             $res->delete();
             return true;
