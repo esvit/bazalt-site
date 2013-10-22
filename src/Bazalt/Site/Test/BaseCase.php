@@ -8,8 +8,6 @@ abstract class BaseCase extends \Bazalt\Rest\Test\BaseCase
 {
     protected $site = null;
 
-    protected $user = null;
-
     protected function setUp()
     {
         $this->site = \Bazalt\Site\Model\Site::create();
