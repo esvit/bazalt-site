@@ -8,9 +8,18 @@ class OptionTest extends \tests\BaseCase
      * @var \Bazalt\Site\Model\Option
      */
     protected $option;
+    
+    /**
+     * @var \Bazalt\Site\Model\Site
+     */
+    protected $site;
 
     protected function setUp()
     {
+        $this->site = \Bazalt\Site\Model\Site::create();
+        $this->site->id = 1;
+        $this->site->save();
+        
         $this->option = new \Bazalt\Site\Model\Option();
         $this->option->name = 'test';
         $this->option->value = 'testValue';
@@ -20,7 +29,7 @@ class OptionTest extends \tests\BaseCase
 
     protected function tearDown()
     {
-        $this->option->delete();
+        $this->site->delete();
     }
 
     public function testGet()
