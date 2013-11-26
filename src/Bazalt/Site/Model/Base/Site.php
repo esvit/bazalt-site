@@ -67,7 +67,7 @@ abstract class Site extends \Bazalt\ORM\Record
 
     public function initPlugins()
     {
-        $this->hasPlugin('Bazalt\\Site\\ORM\\Localizable', ['title']);
+        //$this->hasPlugin('Bazalt\\Site\\ORM\\Localizable', ['title']);
         $this->hasPlugin('Bazalt\\ORM\\Plugin\\Timestampable', ['created' => 'created_at', 'updated' => 'updated_at']);
     }
 }
