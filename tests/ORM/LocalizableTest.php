@@ -18,6 +18,8 @@ class LocalizableTest extends \Bazalt\Site\Test\BaseCase
         Localizable::setCurrentSite($this->site);
         Localizable::setReturnAllLanguages(false);
 
+        \Bazalt\Site::getId();
+
         $this->site->addLanguage(Language::getByAlias('en'));
         $this->site->addLanguage(Language::getByAlias('ru'));
         $this->site->addLanguage(Language::getByAlias('uk'));
