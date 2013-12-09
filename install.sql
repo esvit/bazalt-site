@@ -15,37 +15,31 @@ CREATE TABLE IF NOT EXISTS `cms_themes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `cms_sites`;
-CREATE TABLE `cms_sites` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `domain` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci',
-  `path` VARCHAR(255) NOT NULL DEFAULT '/' COLLATE 'utf8_unicode_ci',
-  `secret_key` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci',
-  `theme_id` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci',
-  `language_id` VARCHAR(2) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci',
-  `languages` VARCHAR(255) NOT NULL DEFAULT 'en' COLLATE 'utf8_unicode_ci',
-  `is_subdomain` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
-  `is_active` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
-  `is_multilingual` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
-  `is_allow_indexing` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
-  `user_id` INT(10) UNSIGNED NULL DEFAULT NULL,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `site_id` INT(10) UNSIGNED NULL DEFAULT NULL,
-  `is_redirect` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `cms_sites` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `domain` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `path` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '/',
+  `secret_key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `theme_id` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `language_id` varchar(2) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `languages` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'en',
+  `is_subdomain` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `is_active` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `is_multilingual` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `is_allow_indexing` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `created_at` datetime NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `site_id` int(10) unsigned DEFAULT NULL,
+  `is_redirect` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `domain` (`domain`),
-  INDEX `FK_cms_sites_cms_sites` (`site_id`),
-  INDEX `FK_cms_sites_cms_users` (`user_id`),
-  INDEX `FK_cms_sites_cms_languages` (`language_id`),
-  INDEX `FK_cms_sites_cms_themes` (`theme_id`),
-  CONSTRAINT `FK_cms_sites_cms_languages` FOREIGN KEY (`language_id`) REFERENCES `cms_languages` (`id`) ON UPDATE NO ACTION ON DELETE SET NULL,
-  CONSTRAINT `FK_cms_sites_cms_sites` FOREIGN KEY (`site_id`) REFERENCES `cms_sites` (`id`) ON UPDATE NO ACTION ON DELETE SET NULL,
-  CONSTRAINT `FK_cms_sites_cms_themes` FOREIGN KEY (`theme_id`) REFERENCES `cms_themes` (`id`) ON UPDATE NO ACTION ON DELETE SET NULL,
-  CONSTRAINT `FK_cms_sites_cms_users` FOREIGN KEY (`user_id`) REFERENCES `cms_users` (`id`) ON UPDATE NO ACTION ON DELETE SET NULL
-)
-  COLLATE='utf8_unicode_ci'
-  ENGINE=InnoDB;
-
+  UNIQUE KEY `domain` (`domain`),
+  KEY `FK_cms_sites_cms_sites` (`site_id`),
+  KEY `FK_cms_sites_cms_languages` (`language_id`),
+  KEY `FK_cms_sites_cms_themes` (`theme_id`),
+  CONSTRAINT `FK_cms_sites_cms_languages` FOREIGN KEY (`language_id`) REFERENCES `cms_languages` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
+  CONSTRAINT `FK_cms_sites_cms_sites` FOREIGN KEY (`site_id`) REFERENCES `cms_sites` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
+  CONSTRAINT `FK_cms_sites_cms_themes` FOREIGN KEY (`theme_id`) REFERENCES `cms_themes` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `cms_sites_locale`;
 CREATE TABLE IF NOT EXISTS `cms_sites_locale` (
@@ -92,5 +86,5 @@ INSERT INTO `cms_languages` (`id`, `title`) VALUES ('en', 'English');
 INSERT INTO `cms_languages` (`id`, `title`) VALUES ('ru', 'Русский (Russian)');
 INSERT INTO `cms_languages` (`id`, `title`) VALUES ('uk', 'Українська (Ukrainian)');
 
-INSERT INTO `cms_sites` (`id`, `domain`, `path`, `secret_key`, `theme_id`, `language_id`, `languages`, `is_subdomain`, `is_active`, `is_multilingual`, `is_allow_indexing`, `user_id`, `created_at`, `updated_at`, `site_id`, `is_redirect`)
-  VALUES (1, 'localhost', '/', NULL, 'default', 'en', 'en', 0, 1, 1, 0, NULL, '2013-08-03 12:45:21', '2013-10-15 00:59:36', NULL, 0);
+INSERT INTO `cms_sites` (`id`, `domain`, `path`, `secret_key`, `theme_id`, `language_id`, `languages`, `is_subdomain`, `is_active`, `is_multilingual`, `is_allow_indexing`, `created_at`, `updated_at`, `site_id`, `is_redirect`)
+  VALUES (1, 'localhost', '/', NULL, 'default', 'en', 'en', 0, 1, 1, 0, '2013-08-03 12:45:21', '2013-10-15 00:59:36', NULL, 0);
