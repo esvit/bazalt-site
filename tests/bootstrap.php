@@ -21,3 +21,5 @@ $dbParams = array(
 
 $connectionString = new \Bazalt\ORM\Adapter\Mysql($dbParams);
 \Bazalt\ORM\Connection\Manager::add($connectionString, 'default');
+
+\Bazalt\Site::get();
