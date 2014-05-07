@@ -8,7 +8,7 @@ namespace Bazalt\Site\Model\Base;
  * @property    string  title
  * @property    string  secret_key
  * @property    int     theme_id
- * @property    int     language_id
+ * @property    string  language_id
  * @property    string  languages
  * @property    int     is_subdomain
  * @property    int     user_id
@@ -39,7 +39,7 @@ abstract class Site extends \Bazalt\ORM\Record
         $this->hasColumn('languages', 'N:varchar(255)');
         $this->hasColumn('secret_key', 'N:varchar(255)');
         $this->hasColumn('theme_id', 'NU:int(11)');
-        $this->hasColumn('language_id', 'NU:int(11)');
+        $this->hasColumn('language_id', 'NU:varchar(2)');
         $this->hasColumn('is_subdomain', 'U:tinyint(3)|0');
         $this->hasColumn('is_active', 'U:tinyint(3)|0');
         $this->hasColumn('is_allow_indexing', 'U:tinyint(3)|0');
