@@ -35,6 +35,7 @@ abstract class Site extends \Bazalt\ORM\Record
     {
         $this->hasColumn('id', 'PUA:int(10)');
         $this->hasColumn('domain', 'varchar(255)|localhost');
+        $this->hasColumn('title', 'varchar(255)');
         $this->hasColumn('path', 'varchar(255)|/');
         $this->hasColumn('languages', 'N:varchar(255)');
         $this->hasColumn('secret_key', 'N:varchar(255)');
