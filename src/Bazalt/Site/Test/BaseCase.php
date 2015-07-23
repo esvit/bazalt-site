@@ -11,6 +11,7 @@ abstract class BaseCase extends \Bazalt\Rest\Test\BaseCase
     protected function setUp()
     {
         $this->site = \Bazalt\Site\Model\Site::create();
+        $this->site->secret_key = uniqid();
         $this->site->save();
 
         \Bazalt\Site::setCurrent($this->site);
