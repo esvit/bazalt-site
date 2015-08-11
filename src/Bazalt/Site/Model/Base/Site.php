@@ -48,6 +48,7 @@ abstract class Site extends \Bazalt\ORM\Record
         $this->hasColumn('user_id', 'NU:int(11)');
         $this->hasColumn('site_id', 'NU:int(11)');
         $this->hasColumn('is_redirect', 'U:tinyint(3)|0');
+        $this->hasColumn('is_https', 'U:tinyint(3)|0');
     }
 
     public function initRelations()
