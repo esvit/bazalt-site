@@ -23,6 +23,12 @@ class Option extends Base\Option
 
         return $res;
     }
+    
+    public static function getValue($name, $defaultValue = null)
+    {
+        $obj = self::get($name);
+        return $obj ? $obj->value : $defaultValue;
+    }
 
     public static function get($name, $siteId = null)
     {
