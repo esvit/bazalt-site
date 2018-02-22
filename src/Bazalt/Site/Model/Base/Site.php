@@ -16,7 +16,10 @@ namespace Bazalt\Site\Model\Base;
  * @property    int     is_multilingual
  * @property    int     is_allow_indexing
  * @property    int     site_id
- * @property    int     is_redirect
+ * @property    bool    is_redirect
+ * @property    bool    is_https
+ * @property    bool    use_letsencrypt
+ * @property    int     partner_id
  * @property    Language       DefaultLanguage
  * @property    Language[]     Languages
  */
@@ -49,6 +52,8 @@ abstract class Site extends \Bazalt\ORM\Record
         $this->hasColumn('site_id', 'NU:int(11)');
         $this->hasColumn('is_redirect', 'U:tinyint(3)|0');
         $this->hasColumn('is_https', 'U:tinyint(3)|0');
+        $this->hasColumn('use_letsencrypt', 'U:tinyint(3)|0');
+        $this->hasColumn('partner_id', 'NU:int(10)');
     }
 
     public function initRelations()
