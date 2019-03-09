@@ -30,26 +30,9 @@ class Site extends Base\Site
          return $q->fetch();
     }
 
-    public static function getSiteMirrors($site)
-    {
-        $siteId = $site->id;
-        if ($site->site_id) {
-            $siteId = $site->site_id;
-        }
-        $mirrors = ORM::select('Bazalt\Site\Model\Site s')
-            ->where('s.site_id = ?', $siteId)
-            ->fetchAll();
-        return $mirrors;
-    }
-
     public function getUrl()
     {
         return 'http://' . $this->domain . $this->path;
-    }
-
-    public function getMirrors()
-    {
-        return self::getSiteMirrors($this);
     }
 
     /**
@@ -138,9 +121,6 @@ class Site extends Base\Site
 
         $res['is_subdomain'] = $this->is_subdomain == '1';
         $res['is_active'] = $this->is_active == '1';
-        $res['is_multilingual'] = $this->is_multilingual == '1';
-        $res['is_allow_indexing'] = $this->is_allow_indexing == '1';
-        $res['is_redirect'] = $this->is_redirect == '1';
         return $res;
     }
 }

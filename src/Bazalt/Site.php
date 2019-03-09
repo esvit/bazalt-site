@@ -86,7 +86,18 @@ class Site
 
     public static function getId()
     {
+        if(isset($_SERVER['APPLICATION_SITE_ID']) && $_SERVER['APPLICATION_SITE_ID']) {
+            return (int)$_SERVER['APPLICATION_SITE_ID'];
+        }
         return self::get()->id;
+    }
+
+    public static function getLanguageId()
+    {
+        if(isset($_SERVER['APPLICATION_SITE_LANGUAGE_ID']) && $_SERVER['APPLICATION_SITE_LANGUAGE_ID']) {
+            return $_SERVER['APPLICATION_SITE_LANGUAGE_ID'];
+        }
+        return self::get()->language_id;
     }
 
     /**
@@ -107,11 +118,9 @@ class Site
                 $site = Site\Model\Site::create();
                 $site->id = 1;
                 $site->domain = $domain;
-                $site->is_subdomain = false;
                 $site->is_active = true;
                 $site->save();
             } else {
-                $site->is_subdomain = false;
                 $site->is_active = true;
             }
         } else {

@@ -44,13 +44,7 @@ abstract class Site extends \Bazalt\ORM\Record
         $this->hasColumn('secret_key', 'N:varchar(255)');
         $this->hasColumn('theme_id', 'NU:int(11)');
         $this->hasColumn('language_id', 'NU:varchar(2)');
-        $this->hasColumn('is_subdomain', 'U:tinyint(3)|0');
         $this->hasColumn('is_active', 'U:tinyint(3)|0');
-        $this->hasColumn('is_allow_indexing', 'U:tinyint(3)|0');
-        $this->hasColumn('is_multilingual', 'U:tinyint(3)|0');
-        $this->hasColumn('user_id', 'NU:int(11)');
-        $this->hasColumn('site_id', 'NU:int(11)');
-        $this->hasColumn('is_redirect', 'U:tinyint(3)|0');
         $this->hasColumn('is_https', 'U:tinyint(3)|0');
         $this->hasColumn('use_letsencrypt', 'U:tinyint(3)|0');
         $this->hasColumn('partner_id', 'NU:int(10)');
@@ -59,14 +53,8 @@ abstract class Site extends \Bazalt\ORM\Record
     public function initRelations()
     {
         $this->hasRelation('Site', new \Bazalt\ORM\Relation\One2One(self::MODEL_NAME, 'site_id', 'id'));
-        $this->hasRelation('Mirrors', new \Bazalt\ORM\Relation\One2Many(self::MODEL_NAME, 'id', 'site_id'));
 
         $this->hasRelation('Theme', new \Bazalt\ORM\Relation\One2One('Bazalt\\Site\\Model\\Theme', 'theme_id', 'id'));
-
-        //$this->hasRelation('Components', new \Bazalt\ORM\Relation\Many2Many('Framework\CMS\Model\Component', 'site_id', 'Framework\CMS\Model\ComponentRefSite', 'component_id'));
-        //$this->hasRelation('Options', new \Bazalt\ORM\Relation\One2Many('Framework\CMS\Model\Option', 'id', 'site_id'));
-        //$this->hasRelation('Users', new \Bazalt\ORM\Relation\Many2Many('Framework\CMS\Model\User', 'site_id', 'Framework\CMS\Model\SiteRefUser', 'user_id'));
-        //$this->hasRelation('Widgets', new \Bazalt\ORM\Relation\One2Many('Framework\CMS\Model\WidgetInstance', 'id', 'site_id'));
 
         $this->hasRelation('DefaultLanguage', new \Bazalt\ORM\Relation\One2One('Bazalt\\Site\\Model\\Language', 'language_id', 'id'));
         $this->hasRelation('Languages', new \Bazalt\ORM\Relation\Many2Many('Bazalt\\Site\\Model\\Language', 'site_id', 'Bazalt\\Site\\Model\\LanguageRefSite', 'language_id'));
