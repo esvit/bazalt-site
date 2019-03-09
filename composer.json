@@ -1,5 +1,5 @@
 {
-    "name": "bazalt/site",
+    "name": "davintoo/bazalt-site",
     "license": "MIT",
     "authors": [
         {
@@ -13,7 +13,7 @@
         }
     },
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=7.0.0",
         "analog/analog": "dev-master",
         "bazalt/orm": "dev-master",
         "bazalt/data": "dev-master",

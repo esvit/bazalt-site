@@ -23,21 +23,14 @@ CREATE TABLE IF NOT EXISTS `cms_sites` (
   `theme_id` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `language_id` varchar(2) COLLATE utf8_unicode_ci DEFAULT NULL,
   `languages` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'en',
-  `is_subdomain` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `is_active` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `is_multilingual` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `is_allow_indexing` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `created_at` datetime NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `site_id` int(10) unsigned DEFAULT NULL,
-  `is_redirect` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `domain` (`domain`),
-  KEY `FK_cms_sites_cms_sites` (`site_id`),
   KEY `FK_cms_sites_cms_languages` (`language_id`),
   KEY `FK_cms_sites_cms_themes` (`theme_id`),
   CONSTRAINT `FK_cms_sites_cms_languages` FOREIGN KEY (`language_id`) REFERENCES `cms_languages` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
-  CONSTRAINT `FK_cms_sites_cms_sites` FOREIGN KEY (`site_id`) REFERENCES `cms_sites` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `FK_cms_sites_cms_themes` FOREIGN KEY (`theme_id`) REFERENCES `cms_themes` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
