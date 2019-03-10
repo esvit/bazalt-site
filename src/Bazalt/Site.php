@@ -100,6 +100,22 @@ class Site
         return self::get()->language_id;
     }
 
+    public static function getAppVersion()
+    {
+        if(isset($_SERVER['APPLICATION_VERSION']) && $_SERVER['APPLICATION_VERSION']) {
+            return $_SERVER['APPLICATION_VERSION'];
+        }
+        return self::get()->app_version ? self::get()->app_version : 'dev';
+    }
+
+    public static function getSiteSecret()
+    {
+        if(isset($_SERVER['APPLICATION_SITE_SECRET']) && $_SERVER['APPLICATION_SITE_SECRET']) {
+            return $_SERVER['APPLICATION_SITE_SECRET'];
+        }
+        return self::get()->secret_key;
+    }
+
     /**
      * Detect current site from domain name and redirect as required
      *
