@@ -12,7 +12,7 @@ services:
 before_install:
   - mysql -u$DB_USERNAME -e 'create database bazalt_cms;'
   - mysql -u$DB_USERNAME bazalt_cms < install.sql
-  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('awdawd') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
+  - echo "USE mysql;\nUPDATE user SET authentication_string=PASSWORD('awdawd') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
   - pecl install mcrypt-1.0.2
   - echo "extension=mcrypt.so" > /etc/php/7.3/mods-available/mcrypt.ini
   - ln -s /etc/php/7.3/mods-available/mcrypt.ini /etc/php/7.3/cli/conf.d/mcrypt.ini
