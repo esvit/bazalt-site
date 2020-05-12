@@ -1,26 +1,41 @@
 {
-    "name": "davintoo/bazalt-site",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Vitalii Savchuk",
-            "email": "esvit666@gmail.com"
-        }
-    ],
-    "autoload": {
-        "psr-0": {
-            "Bazalt\\Site": "src/"
-        }
-    },
-    "require": {
-        "php": ">=7.0.0",
-        "analog/analog": "dev-master",
-        "bazalt/orm": "dev-master",
-        "bazalt/data": "dev-master",
-        "davintoo/bazalt-rest": "dev-master",
-        "symfony/event-dispatcher": "*"
-    },
-    "require-dev": {
-        "satooshi/php-coveralls": "dev-master"
+  "name": "davintoo/bazalt-site",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Vitalii Savchuk",
+      "email": "esvit666@gmail.com"
     }
+  ],
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/davintoo/tonic.git"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/davintoo/bazalt-rest.git"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/esvit/bazalt-orm.git"
+    }
+  ],
+  "autoload": {
+    "psr-0": {
+      "Bazalt\\Site": "src/"
+    }
+  },
+  "require": {
+    "php": ">=7.3",
+    "analog/analog": "dev-master",
+    "davintoo/tonic": "dev-3.2-fix",
+    "davintoo/bazalt-rest": "dev-master",
+    "bazalt/orm": "dev-master",
+    "bazalt/data": "dev-master",
+    "symfony/event-dispatcher": "~4.4.5"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8"
+  }
 }

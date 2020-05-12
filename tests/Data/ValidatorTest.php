@@ -10,7 +10,7 @@ class ValidatorTest extends \Bazalt\Site\Test\BaseCase
 {
     protected $site;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->site = \Bazalt\Site\Model\Site::create();
         $this->site->id = 999;
@@ -24,7 +24,7 @@ class ValidatorTest extends \Bazalt\Site\Test\BaseCase
         $this->site->addLanguage(Language::getByAlias('uk'));
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->site->delete();
         Localizable::setCurrentSite(null);

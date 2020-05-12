@@ -1,8 +1,7 @@
 language: php
 
 php:
-  - 7.0
-  - 7.1
+  - 7.3
 
 env:
   - APPLICATION_ENV="testing" DB_USERNAME="root"
@@ -11,6 +10,9 @@ before_install:
   - mysql -u$DB_USERNAME -e 'create database bazalt_cms;'
   - mysql -u$DB_USERNAME bazalt_cms < install.sql
   - echo "USE mysql;\nUPDATE user SET password=PASSWORD('awdawd') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
+  - pecl install mcrypt-1.0.2
+  - echo "extension=mcrypt.so" > /etc/php/7.3/mods-available/mcrypt.ini
+  - ln -s /etc/php/7.3/mods-available/mcrypt.ini /etc/php/7.3/cli/conf.d/mcrypt.ini
 
 before_script:
   - composer self-update
@@ -19,7 +21,7 @@ before_script:
 script:
   - mkdir -p tmp/logs
   - mkdir -p build/logs
-  - phpunit --configuration phpunit.xml.dist
+  - ./vendor/bin/phpunit --configuration phpunit.xml.dist
 
 after_script:
   - php vendor/bin/coveralls -v

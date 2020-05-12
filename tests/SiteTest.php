@@ -8,7 +8,7 @@ class SiteTest extends \Bazalt\Site\Test\BaseCase
 {
     protected $view;
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

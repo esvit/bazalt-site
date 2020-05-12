@@ -14,7 +14,7 @@ class OptionTest extends \Bazalt\Site\Test\BaseCase
      */
     protected $site;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         
@@ -25,7 +25,7 @@ class OptionTest extends \Bazalt\Site\Test\BaseCase
         $this->option->save();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

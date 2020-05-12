@@ -11,14 +11,14 @@ class SiteTest extends \Bazalt\Site\Test\BaseCase
      */
     protected $site;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->site = \Bazalt\Site\Model\Site::create();
         $this->site->id = 999;
         $this->site->save();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->site->delete();
     }

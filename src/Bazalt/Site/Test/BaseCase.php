@@ -8,7 +8,7 @@ abstract class BaseCase extends \Bazalt\Rest\Test\BaseCase
 {
     protected $site = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->site = \Bazalt\Site\Model\Site::create();
         $this->site->secret_key = uniqid();
@@ -17,7 +17,7 @@ abstract class BaseCase extends \Bazalt\Rest\Test\BaseCase
         \Bazalt\Site::setCurrent($this->site);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if ($this->site->id) {
             $this->site->delete();
