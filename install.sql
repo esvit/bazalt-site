@@ -81,5 +81,5 @@ INSERT INTO `cms_languages` (`id`, `title`) VALUES ('uk', 'Українська 
 
 INSERT INTO `cms_themes` (`id`, `settings`, `is_active`, `is_hidden`) VALUES ('default', NULL, 1, 0);
 
-INSERT INTO `cms_sites` (`id`, `domain`, `path`, `secret_key`, `theme_id`, `language_id`, `languages`, `is_subdomain`, `is_active`, `is_multilingual`, `is_allow_indexing`, `created_at`, `updated_at`, `site_id`, `is_redirect`)
-  VALUES (1, 'localhost', '/', NULL, 'default', 'en', 'en', 0, 1, 1, 0, '2013-08-03 12:45:21', '2013-10-15 00:59:36', NULL, 0);
+INSERT INTO `cms_sites` (`id`, `domain`, `path`, `secret_key`, `theme_id`, `language_id`, `languages`, `is_active`, `created_at`, `updated_at`)
+  VALUES (1, 'localhost', '/', NULL, 'default', 'en', 'en', 1, '2013-08-03 12:45:21', '2013-10-15 00:59:36');
