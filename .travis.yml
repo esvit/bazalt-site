@@ -14,8 +14,7 @@ before_install:
   - mysql -u$DB_USERNAME bazalt_cms < install.sql
   - echo "USE mysql;\nUPDATE user SET authentication_string=PASSWORD('awdawd') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
   - yes '' | pecl install -f mcrypt-1.0.2
-  - echo "extension=mcrypt.so" > /etc/php/7.3/mods-available/mcrypt.ini
-  - ln -s /etc/php/7.3/mods-available/mcrypt.ini /etc/php/7.3/cli/conf.d/mcrypt.ini
+  - echo "extension=mcrypt.so" > ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 before_script:
   - composer self-update
