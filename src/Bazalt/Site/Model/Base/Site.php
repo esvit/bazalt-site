@@ -48,6 +48,7 @@ abstract class Site extends \Bazalt\ORM\Record
         $this->hasColumn('is_https', 'U:tinyint(3)|0');
         $this->hasColumn('use_letsencrypt', 'U:tinyint(3)|0');
         $this->hasColumn('partner_id', 'NU:int(10)');
+        $this->hasColumn('tariff', "ENUM('base','busines','company')");
     }
 
     public function initRelations()
